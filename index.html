@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="ko">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>乐透号码推荐器</title>
-  <meta name="description" content="点击按钮即可从1~45中随机推荐6个不重复号码（单页HTML版）。" />
+  <title>로또 번호 추천기</title>
+  <meta name="description" content="버튼을 클릭하면 1~45 중에서 중복되지 않는 6개의 숫자를 무작위로 추천해 드립니다 (단일 HTML 페이지 버전)." />
 
   <style>
     :root{
@@ -30,7 +30,7 @@
     }
     .container{max-width:1100px; margin:0 auto; padding:24px}
 
-    /* 2열 레이아웃: 왼쪽(추첨기) / 오른쪽(최근추천) */
+    /* 2열 레이아웃: 왼쪽(추첨기) / 오른쪽(최근 추천) */
     .top-grid{
       display:grid;
       grid-template-columns: 1.55fr .95fr;
@@ -163,7 +163,7 @@
       font-size: 14px;
     }
 
-    /* 最近推荐 */
+    /* 최근 추천 */
     .history{
       margin-top: 10px;
       display:flex;
@@ -206,7 +206,7 @@
       font-size: 13.5px;
     }
 
-    /* ✅ DHLottery 안내 박스 (중국어로 통일) */
+    /* ✅ 동행복권 안내 박스 */
     .korea-lotto-box{
       margin-top: 14px;
       padding: 14px;
@@ -251,74 +251,80 @@
 <body>
   <div class="container">
     <div class="top-grid">
-      <!-- 左：推荐器 -->
+      <!-- 왼쪽: 추천기 -->
       <div class="card">
         <header>
           <div>
-            <h1>乐透号码推荐器</h1>
-            <p class="subtitle">点击按钮即可从 1~45 中随机推荐 6 个不重复号码。</p>
+            <h1>로또 번호 추천기</h1>
+            <p class="subtitle">버튼을 클릭하면 1~45 중에서 중복되지 않는 6개의 숫자를 무작위로 추천해 드립니다.</p>
           </div>
           <div class="pill" id="updatedAt">-</div>
         </header>
 
         <div class="row">
           <div class="controls">
-            <button class="btn" id="btnPick" type="button">🎲 推荐号码</button>
-            <button class="btn secondary" id="btnCopy" type="button">📋 复制</button>
-            <button class="btn ghost" id="btnReset" type="button">🧹 清空</button>
+            <button class="btn" id="btnPick" type="button">🎲 번호 추천</button>
+            <button class="btn secondary" id="btnCopy" type="button">📋 복사</button>
+            <button class="btn ghost" id="btnReset" type="button">🧹 초기화</button>
 
-            <label title="将推荐号码按升序排列">
+            <label title="추천 번호를 오름차순으로 정렬합니다.">
               <input type="checkbox" id="sortAsc" checked />
-              升序排列
+              오름차순 정렬
             </label>
 
-            <label title="保存最近推荐记录（最多5条）">
+            <label title="최근 추천 기록을 저장합니다 (최대 5개).">
               <input type="checkbox" id="saveHistory" checked />
-              保存记录
+              기록 저장
+            </label>
+          </div>
+
+          <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+              <input type="checkbox" id="checkbox" />
+              <div class="slider round"></div>
             </label>
           </div>
 
           <div class="small" id="hint">
-            小提示：可以连续点击“推荐号码”，每次都会重新随机生成。
+            팁: '번호 추천'을 계속 클릭하면 새로운 번호가 생성됩니다.
           </div>
         </div>
 
-        <div class="numbers" id="numbers" aria-label="推荐号码显示区域"></div>
+        <div class="numbers" id="numbers" aria-label="추천 번호 표시 영역"></div>
 
-        <!-- ✅ 빨간 동그라미 영역(모두 중국어) -->
-        <div class="korea-lotto-box" aria-label="韩国彩票官网 안내">
-          <div class="korea-lotto-title">韩国彩票官网（DHLottery）</div>
-          <div class="korea-lotto-desc">可在线购买韩国的彩票。</div>
+        <div class="korea-lotto-box" aria-label="한국 로또 공식 웹사이트 안내">
+          <div class="korea-lotto-title">한국 로또 공식 웹사이트 (동행복권)</div>
+          <div class="korea-lotto-desc">온라인으로 한국 로또를 구매할 수 있습니다.</div>
 
           <a class="korea-lotto-link" href="https://www.dhlottery.co.kr/" target="_blank" rel="noopener noreferrer">
             https://www.dhlottery.co.kr/
           </a>
 
           <div class="korea-lotto-actions">
-            <button class="btn ghost" type="button" id="copyDHL">复制链接</button>
-            <a class="btn secondary" href="https://www.dhlottery.co.kr/" target="_blank" rel="noopener noreferrer">立即打开</a>
+            <button class="btn ghost" type="button" id="copyDHL">링크 복사</button>
+            <a class="btn secondary" href="https://www.dhlottery.co.kr/" target="_blank" rel="noopener noreferrer">지금 열기</a>
           </div>
         </div>
 
         <div class="meta">
-          <div class="pill" id="status">等待中</div>
-          <div class="small">※ 号码为随机推荐，不保证中奖。</div>
+          <div class="pill" id="status">대기 중</div>
+          <div class="small">※ 번호는 무작위 추천이며, 당첨을 보장하지 않습니다.</div>
         </div>
       </div>
 
-      <!-- 右：最近推荐（显示 5 条） -->
+      <!-- 오른쪽: 최근 추천 (5개 표시) -->
       <div class="card">
-        <h2 style="margin:0 0 8px; font-size:18px;">最近推荐（显示 5 条）</h2>
-        <div class="small">记录保存在本地浏览器（刷新也不会丢）。</div>
+        <h2 style="margin:0 0 8px; font-size:18px;">최근 추천 (5개 표시)</h2>
+        <div class="small">기록은 로컬 브라우저에 저장됩니다 (새로고침해도 사라지지 않음).</div>
         <div class="history" id="history"></div>
 
         <div style="margin-top:12px; border-top:1px solid var(--line); padding-top:12px;">
-          <h3 style="margin:0 0 8px; font-size:16px;">使用方法</h3>
+          <h3 style="margin:0 0 8px; font-size:16px;">사용 방법</h3>
           <ul class="list">
-            <li>点击 <b style="color:var(--text)">推荐号码</b> 生成 6 个号码</li>
-            <li>点击 <b style="color:var(--text)">复制</b> 复制为 “1, 2, 3, 4, 5, 6” 格式</li>
-            <li>关闭 <b style="color:var(--text)">升序排列</b> 可按生成顺序显示</li>
-            <li>关闭 <b style="color:var(--text)">保存记录</b> 则不写入最近推荐</li>
+            <li><b style="color:var(--text)">번호 추천</b> 을 클릭하여 6개의 번호 생성</li>
+            <li><b style="color:var(--text)">복사</b> 를 클릭하여 "1, 2, 3, 4, 5, 6" 형식으로 복사</li>
+            <li><b style="color:var(--text)">오름차순 정렬</b> 끄면 생성 순서대로 표시</li>
+            <li><b style="color:var(--text)">기록 저장</b> 끄면 최근 추천 기록을 저장하지 않음</li>
           </ul>
         </div>
       </div>
@@ -328,7 +334,7 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    // ===== 工具 =====
+    // ===== 도구 =====
     const $ = (id) => document.getElementById(id);
 
     function pad2(n){ return String(n).padStart(2, "0"); }
@@ -344,7 +350,7 @@
       toast._t = setTimeout(() => el.style.display = "none", 1400);
     }
 
-    // ===== 生成：1~45 不重复 6 个 =====
+    // ===== 생성: 1~45 중복 없는 6개 =====
     function pickLotto(){
       const set = new Set();
       while(set.size < 6){
@@ -354,7 +360,7 @@
       return Array.from(set);
     }
 
-    // ===== 渲染号码 =====
+    // ===== 번호 렌더링 =====
     function ballGroup(n){
       if(n <= 10) return 1;
       if(n <= 20) return 2;
@@ -376,8 +382,8 @@
       });
     }
 
-    // ===== 最近推荐：最多 5 条 =====
-    const STORAGE_KEY = "lotto_history_v3_cn";
+    // ===== 최근 추천: 최대 5개 =====
+    const STORAGE_KEY = "lotto_history_v3_ko";
     const MAX_HISTORY = 5;
 
     function loadHistory(){
@@ -401,7 +407,7 @@
         const empty = document.createElement("div");
         empty.className = "small";
         empty.style.marginTop = "10px";
-        empty.textContent = "暂无记录，先点击“推荐号码”试试吧！";
+        empty.textContent = "기록 없음. 먼저 '번호 추천'을 클릭해 보세요!";
         box.appendChild(empty);
         return;
       }
@@ -417,7 +423,7 @@
         right.className = "btn ghost";
         right.type = "button";
         right.style.padding = "8px 10px";
-        right.textContent = "复制";
+        right.textContent = "복사";
         right.addEventListener("click", async () => {
           await copyText(item.text);
         });
@@ -428,31 +434,31 @@
       });
     }
 
-    // ===== 复制 =====
+    // ===== 복사 =====
     async function copyText(text){
       try{
         await navigator.clipboard.writeText(text);
-        toast("已复制！");
+        toast("복사되었습니다!");
       }catch(e){
-        prompt("无法自动复制，请手动复制以下内容：", text);
+        prompt("자동 복사 실패. 아래 내용을 수동으로 복사하세요:", text);
       }
     }
 
-    // ✅ 复制 DHLottery 链接（toast도 중국어）
+    // ✅ DHLottery 링크 복사 (토스트도 한국어)
     const copyDHLBtn = document.getElementById("copyDHL");
     if(copyDHLBtn){
       copyDHLBtn.addEventListener("click", async () => {
         const url = "https://www.dhlottery.co.kr/";
         try{
           await navigator.clipboard.writeText(url);
-          toast("链接已复制！");
+          toast("링크가 복사되었습니다!");
         }catch(e){
-          prompt("无法自动复制，请手动复制以下内容：", url);
+          prompt("자동 복사 실패. 아래 내용을 수동으로 복사하세요:", url);
         }
       });
     }
 
-    // ===== 状态 & 清空 =====
+    // ===== 상태 & 초기화 =====
     function setStatus(msg){
       $("status").textContent = msg;
     }
@@ -461,11 +467,11 @@
       $("numbers").innerHTML = "";
       localStorage.removeItem(STORAGE_KEY);
       renderHistory();
-      setStatus("已清空");
-      toast("已清空");
+      setStatus("초기화되었습니다");
+      toast("초기화되었습니다");
     }
 
-    // ===== 事件 =====
+    // ===== 이벤트 =====
     let lastNums = [];
 
     $("btnPick").addEventListener("click", () => {
@@ -477,7 +483,7 @@
 
       const now = new Date();
       const text = finalNums.join(", ");
-      setStatus(`推荐完成：${text}`);
+      setStatus(`추천 완료: ${text}`);
 
       if($("saveHistory").checked){
         const items = loadHistory();
@@ -489,21 +495,21 @@
 
     $("btnCopy").addEventListener("click", async () => {
       if(!lastNums.length){
-        toast("请先点击“推荐号码”！");
+        toast("먼저 '번호 추천'을 클릭해 주세요!");
         return;
       }
       await copyText(lastNums.join(", "));
     });
 
     $("btnReset").addEventListener("click", () => {
-      if(confirm("确定要清空推荐号码和最近记录吗？")){
+      if(confirm("추천 번호와 최근 기록을 모두 지우시겠습니까?")){
         resetAll();
       }
     });
 
-    // ===== 初始显示 =====
+    // ===== 초기 표시 =====
     const now = new Date();
-    $("updatedAt").textContent = `访问时间：${formatTime(now)}`;
+    $("updatedAt").textContent = `방문 시간: ${formatTime(now)}`;
     renderHistory();
   </script>
 </body>
